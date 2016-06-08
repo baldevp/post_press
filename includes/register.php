@@ -1,4 +1,5 @@
 <?php
+	//Backend for registration
 	if(isset($_POST['submit'])){
 		$fname=$_POST['fname'];
 		$lname=$_POST['lname'];
