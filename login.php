@@ -1,7 +1,8 @@
 <?php
 $title='Login';
+$user=0;
+include_once('includes/redirectlogin.php'); 
 include_once('includes/head.php');
-include_once('includes/redirectlogin.php');
 include_once('includes/login.php');
 ?>
 <div id="login_outer">

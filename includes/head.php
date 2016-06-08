@@ -8,4 +8,6 @@
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 <body>
-<?php include_once('includes/connectvars.php'); ?>
+<?php
+include_once('includes/checklogin.php'); 
+include_once('includes/connectvars.php'); ?>
