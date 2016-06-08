@@ -20,6 +20,6 @@
 		$error="User not verified. Contact administrator";
 	}
 	else
-		$error='User not found / Wrong Password';
+		$error='User not found/Wrong Password';
 	} 
 ?>
