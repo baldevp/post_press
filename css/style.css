@@ -29,3 +29,10 @@
 		background-color: #fff;
 		height: 100%;
 	}
+	.btn{
+		width: 100%;
+	}
+	.navbar{
+		margin: 0;
+		width: 100%;
+	}
