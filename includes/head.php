@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo $title ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Post Press | <?php echo $title ?></title>
 	<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">

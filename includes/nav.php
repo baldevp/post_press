@@ -18,10 +18,10 @@
       <ul class="nav navbar-nav navbar-right">
         <?php
               $query="select fc_id,fc_name from func_category INNER join functions on func_category.fc_id=functions.func_category
-                INNER join user_power on user_power.function_id=functions.function_id WHERE user_id=".$_COOKIE['user_id']." group by fc_id";
+                INNER join user_power on user_power.function_id=functions.function_id WHERE user_id=".$_COOKIE['user_id']." and show_in_menu=1 group by fc_id";
               $result=mysqli_query($db,$query);
               while($r=mysqli_fetch_array($result)){
-                $query="select function_name,function_link from functions inner join user_power on functions.function_id=user_power.function_id where func_category=".$r['fc_id']." and user_id=".$_COOKIE['user_id']." order by function_name";
+                $query="select function_name,function_link from functions inner join user_power on functions.function_id=user_power.function_id where func_category=".$r['fc_id']." and user_id=".$_COOKIE['user_id']." and  show_in_menu=1 order by function_name";
                 $result1=mysqli_query($db,$query);
               ?>
               <li class="dropdown">
