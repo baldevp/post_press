@@ -2,8 +2,8 @@
 $title="Add Special Options";
 include_once('includes/head.php');
 include_once('includes/power.php');
-include_once('includes/nav.php');
 power($db);
+include_once('includes/nav.php');
 if(isset($_POST['submit'])){
 	$option=ucwords($_POST['option']);
 	$query="insert into special_options(so_name) values('$option')";

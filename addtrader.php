@@ -2,8 +2,8 @@
 $title="Add Trader";
 include_once('includes/head.php');
 include_once('includes/power.php');
-include_once('includes/nav.php');
 power($db);
+include_once('includes/nav.php');
 if(isset($_POST['submit'])){
 	$name=$_POST['name'];
 	$address=$_POST['address'];

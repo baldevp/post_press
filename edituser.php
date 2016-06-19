@@ -2,8 +2,8 @@
 $title="Edit Users";
 include_once('includes/head.php');
 include_once('includes/power.php');
-include_once('includes/nav.php');
 power($db);
+include_once('includes/nav.php');
 ?>
 <h1>Edit User</h1>
 <hr>

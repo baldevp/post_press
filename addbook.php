@@ -37,12 +37,13 @@ if(isset($_POST['submit'])){
 		<input type="text" name="name" class="form-control" placeholder="Book Name" required>
 	</div>
 	<div class="form-group">
-		<select class="form-control" name="language">
+		<select class="form-control" name="language" required id="lang">
+			<option value="0" disabled selected>Book Language</option>
 			<option value="asamiya">Asamiya</option>
 			<option value="bangla">Bangla</option>
 			<option value="english">English</option>
 			<option value="gujarati">Gujarati</option>
-			<option value="hindi" selected>Hindi</option>
+			<option value="hindi">Hindi</option>
 			<option value="kannada">Kannada</option>
 			<option value="malyalam">Malyalam</option>
 			<option value="marathi">Marathi</option>
@@ -56,13 +57,15 @@ if(isset($_POST['submit'])){
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" name="binding">
+		<select class="form-control" name="binding" id="bind">
+			<option value="0" disabled selected>Bind Type</option>
 			<option value="soft">Soft Bound</option>
 			<option value="hard">Hard Bound</option>
 		</select>
 	</div>
 	<div class="form-group">
-	<select class="form-control" name="size">
+	<select class="form-control" name="size" id="size">
+	<option value="0" disabled selected>Book Size</option>
 	<?php
 	$query="select * from book_size";	
 	$result=mysqli_query($db,$query); 
@@ -75,7 +78,8 @@ if(isset($_POST['submit'])){
 	</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" name="paper-type">
+		<select class="form-control" name="paper-type" id="paper">
+			<option value="0" disabled selected>Paper Type</option>
 			<option value="standard">Standard Paper</option>
 			<option value="deluxe">Deluxe Paper</option>
 			<option value="art">Art Paper</option>
@@ -93,6 +97,26 @@ include_once('includes/script.php');
 ?>
 <script type="text/javascript">
 	function validate(){
+		var lang=$('#lang').val();
+		if(lang==null){
+			alert('Select a value for language of the book');
+			return false;
+		}
+		var bind=$('#bind').val();
+		if(bind==null){
+			alert('Select a value for Binding');
+			return false;
+		}
+		var size=$('#size').val();
+		if(size==null){
+			alert('Select a size for the book');
+			return false;
+		}
+		var paper=$('#paper').val();
+		if(paper==null){
+			alert('Select a value for paper type');
+			return false;
+		}
 		var isbn=$('#isbn').val();
 		if(isbn.length!=10){
 			alert("ISBN must be 10 digit long");

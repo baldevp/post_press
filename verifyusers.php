@@ -2,9 +2,11 @@
 $title="Verify Users";
 include_once('includes/head.php');
 include_once('includes/power.php');
-include_once('includes/nav.php');
 power($db);
+include_once('includes/nav.php');
 ?>
+<h1>Verify Users</h1>
+<hr>
 <?php
 if(isset($_POST['submit1'])){
 	$id=$_POST['user_id'];
@@ -74,6 +76,7 @@ if(isset($_POST['submit2'])){
 }
 $query="select * from user where verified=0";
 $result=mysqli_query($db,$query);
+if(mysqli_num_rows($result)>0){
 while($row=mysqli_fetch_array($result)){
 ?>
 <form method="post" class="form1">
@@ -87,9 +90,13 @@ while($row=mysqli_fetch_array($result)){
 <hr>
 </form>
 <?php
-} 
+}
+}
+else{ 
 ?>
+<p>No users to be verified</p>
 <?php
+}
 include_once('includes/script.php');
 include_once('includes/foot.php'); 
 ?>
