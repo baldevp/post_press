@@ -39,3 +39,7 @@
 	.nomargin{
 		padding:0 !important;
 	}
+	.capital 
+	{
+	    text-transform:capitalize;
+	}
