@@ -1,10 +1,14 @@
-	html,body{
-		height: 100%;
+ 	html{
+		min-height: 100%;
 		margin:0;
+		overflow: auto;
+		background-color:#6AB7EE;
+		height: :100%;
 	}
 	#login_outer{
 		background-color:#6AB7EE;
 		height: 100%;
+		background-attachment: scroll;
 	}
 	#login_inner{
 		background-color:#FFFFFF;
@@ -31,15 +35,20 @@
 	}
 	.btn{
 		width: 100%;
+		margin-bottom: 10px !important;
 	}
 	.navbar{
 		margin: 0;
 		width: 100%;
 	}
 	.nomargin{
-		padding:0 !important;
+		padding-left:0 !important;
+		padding-right:0 !important;
 	}
 	.capital 
 	{
 	    text-transform:capitalize;
+	}
+	form{
+		margin-bottom:10px;
 	}

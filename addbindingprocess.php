@@ -9,13 +9,12 @@ if(isset($_POST['submit'])){
 	$process_type=$_POST['process_type'];
 	$process_time=$_POST['process_time'];
 	$count_mode=$_POST['count_mode'];
-	$machine=$_POST['machine'];
 	$rate_section=$_POST['rate_section'];
 	if($rate_section=="")
 		$rate_section=0;
 	else
 		$rate_section=1;
-	$query="insert into binding_process(bp_name,p_type,p_time,count_mode,machine,rate_section) values('$name','$process_type','$process_time','$count_mode',$machine,$rate_section)";
+	$query="insert into binding_process(bp_name,p_type,p_time,count_mode,rate_section) values('$name','$process_type','$process_time','$count_mode',$rate_section)";
 	mysqli_query($db,$query) or die('error querying');
 	$query="select bp_id from binding_process where bp_name='$name' and p_type='$process_type' and p_time='$process_time' order by bp_id desc limit 1";
 	$result=mysqli_query($db,$query) or die('error fetching data');
@@ -39,6 +38,21 @@ if(isset($_POST['submit'])){
 	if(isset($_POST['so4'])){
 		$so4=$_POST['so4'];
 		$query="insert into bp_so(bp_id,so_id) values($id,$so4)";
+		mysqli_query($db,$query);
+	}
+	if(isset($_POST['machine1'])){
+		$m=$_POST['machine1'];
+		$query="insert into bp_machine(bp_id,machine_id) values($id,$m)";
+		mysqli_query($db,$query);
+	}
+	if(isset($_POST['machine2'])){
+		$m=$_POST['machine2'];
+		$query="insert into bp_machine(bp_id,machine_id) values($id,$m)";
+		mysqli_query($db,$query);
+	}
+	if(isset($_POST['machine3'])){
+		$m=$_POST['machine3'];
+		$query="insert into bp_machine(bp_id,machine_id) values($id,$m)";
 		mysqli_query($db,$query);
 	}
 	$success="Binding process edited";
@@ -79,8 +93,8 @@ if(isset($_POST['submit'])){
 	</div>
 	</div>
 	<div class="form-group">
-		<select class="form-control" id="machine" name="machine">
-			<option value="" disabled selected>Machine</option>
+		<select class="form-control" id="machine1" name="machine1" onchange="check2()">
+			<option value="" disabled selected>Machine 1</option>
 			<?php
 			$query="select machine_id,machine_name from machine order by machine_name";
 			$result1=mysqli_query($db,$query);
@@ -93,7 +107,35 @@ if(isset($_POST['submit'])){
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" id="so1" name="so1">
+		<select class="form-control" onchange="check2()" id="machine2" name="machine2">
+			<option value="" disabled selected>Machine 2</option>
+			<?php
+			$query="select machine_id,machine_name from machine order by machine_name";
+			$result1=mysqli_query($db,$query);
+			while($r=mysqli_fetch_array($result1)){
+			?>
+			<option value="<?php echo $r['machine_id']; ?>" ><?php echo $r['machine_name'] ?></option>
+			<?php
+			} 
+			?>
+		</select>
+	</div>
+	<div class="form-group">
+		<select class="form-control" id="machine3" onchange="check2()" name="machine3">
+			<option value="" disabled selected>Machine 3</option>
+			<?php
+			$query="select machine_id,machine_name from machine order by machine_name";
+			$result1=mysqli_query($db,$query);
+			while($r=mysqli_fetch_array($result1)){
+			?>
+			<option value="<?php echo $r['machine_id']; ?>" ><?php echo $r['machine_name'] ?></option>
+			<?php
+			} 
+			?>
+		</select>
+	</div>
+	<div class="form-group">
+		<select class="form-control" id="so1" name="so1" onchange="check1()">
 			<option value="" disabled selected>Special Option 1</option>
 			<?php
 			$query="select so_id,so_name from special_options order by so_name";
@@ -107,7 +149,7 @@ if(isset($_POST['submit'])){
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" id="so2" name="so2">
+		<select class="form-control" id="so2" onchange="check1()" name="so2">
 			<option value="" disabled selected>Special Option 2</option>
 			<?php
 			$query="select so_id,so_name from special_options order by so_name";
@@ -121,7 +163,7 @@ if(isset($_POST['submit'])){
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" id="so3" name="so3">
+		<select class="form-control" id="so3" name="so3" onchange="check1()">
 			<option value="" disabled selected>Special Option 3</option>
 			<?php
 			$query="select so_id,so_name from special_options order by so_name";
@@ -135,7 +177,7 @@ if(isset($_POST['submit'])){
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="form-control" id="so4" name="so4">
+		<select class="form-control" id="so4" name="so4" onchange="check1()">
 			<option value="" disabled selected>Special Option 4</option>
 			<?php
 			$query="select so_id,so_name from special_options order by so_name";
@@ -154,6 +196,50 @@ if(isset($_POST['submit'])){
 include_once('includes/script.php');
 ?>
 <script type="text/javascript">
+	
+	function check2(){
+		var m1=$('#machine1').val();
+		var m2=$('#machine2').val();
+		var m3=$('#machine3').val();
+		if(m3!=null){
+			if(m3==m1||m3==m2){
+				$('#machine3').prop('selectedIndex',0);
+				return;
+			}
+		}
+		if(m2!=null){
+			if(m2==m1){
+				$('#machine2').prop('selectedIndex',0);
+				return;
+			}
+		}
+	}
+
+	function check1(){
+		var s1=$('#so1').val();
+		var s2=$('#so2').val();
+		var s3=$('#so3').val();
+		var s4=$('#so4').val();
+		if(s4!=null){
+			if(s4==s3||s4==s2||s4==s1){
+				$('#so4').prop('selectedIndex',0);
+				return;
+			}
+		}
+		if(s3!=null){
+			if(s3==s2||s3==s1){
+				$('#so3').prop('selectedIndex',0);
+				return;
+			}
+		}
+		if(s2!=null){
+			if(s2==s1){
+				$('#so2').prop('selectedIndex',0);
+				return;
+			}
+		}
+	}
+
 	function validate(){
 		var type=$('#type').val();
 		if(type==null){
@@ -170,29 +256,19 @@ include_once('includes/script.php');
 			alert('Select the count mode');
 			return false;
 		}
-		var machine=$('#machine').val();
-		if(machine==null){
+		var machine1=$('#machine1').val();
+		var m2=$('#machine2').val();
+		var m3=$('#machine3').val();
+		if(machine1==null&&m2==null&&m3==null){
 			alert('Select machine for binding process');
 			return false;
 		}
 		var so1=$('#so1').val();
-		var so2=$('#so2').val();
-		var so3=$('#so3').val();
-		var so4=$('#so4').val();
-		if(so1==null){
+		var s2=$('#so2').val();
+		var s3=$('#so3').val();
+		var s4=$('#so4').val();
+		if(so1==null&&s2==null&&s3==null&&s4==null){
 			alert("Select the special option");
-			return false;
-		}
-		if(so2!=null&&(so2==so1)){
-			alert("An option can only be selected once, duplicate entry detected");
-			return false;
-		}
-		if(so3!=null&&(so3==so1||so3==so2)){
-			alert("An option can only be selected once, duplicate entry detected");
-			return false;
-		}
-		if(so4!=null&&(so4==so1||so4==so2||so4==so3)){
-			alert("An option can only be selected once, duplicate entry detected");
 			return false;
 		}
 	}

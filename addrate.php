@@ -17,8 +17,9 @@ if(isset($_POST['submit'])){
 		$special=$_POST['special'];
 		$book_size=$_POST['book_size'];
 		$ptype=$_POST['paper_type'];
-		$query="insert into rate(binding_process,special_options,book_size,paper_type,rate) values($bindingprocess,$special,$book_size,'$ptype',$rate)";
-		mysqli_query($db,$query);
+		$machine=$_POST['machine'];
+		$query="insert into rate(binding_process,special_options,book_size,paper_type,rate,machine) values($bindingprocess,$special,$book_size,'$ptype',$rate,$machine)";
+		mysqli_query($db,$query) or die($query);
 		$success="Rate added";
 	}
 }
@@ -79,6 +80,7 @@ include_once('includes/script.php');
 		var p_type=$('#paper_type').val();
 		var rate=$('#rate').val();
 		var special=$('#special').val();
+		var machine=$('#machine').val();
 		if(b_process==null){
 			alert('Select Binding Process');
 			return false;
@@ -120,7 +122,8 @@ include_once('includes/script.php');
 		var p_type=$('#paper_type').val();
 		var rate=$('#rate').val();
 		var special=$('#special').val();
-		if(b_process!=null&&b_size!=null&&p_type!=null&&special!=null){
+		var machine=$('#machine').val();
+		if(b_process!=null&&b_size!=null&&p_type!=null&&special!=null&&machine!=null){
 		$.ajax({
  		 method: "POST",
   		 url: "includes/findrate.php",
@@ -128,6 +131,7 @@ include_once('includes/script.php');
   		 	bp_id: b_process,
   			bs_id: b_size,
   			ptype: p_type,
+  			machine: machine,
   			so_id: special }
 		})
   		.done(function( msg ) {
@@ -135,6 +139,7 @@ include_once('includes/script.php');
   				msg=jQuery.parseJSON(msg);
   				$('#append').append('<input name="rate_id" type="hidden" value="'+msg.rate_id+'">');
   				$('#append').append('<input name="current_rate" type="hidden" id="current_rate" value="'+msg.rate+'">');
+  				$('#rate').val(msg.rate);
   				}
   			else{
   			$('#append').append('<input name="current_rate" id="current_rate" type="hidden">');
@@ -152,8 +157,10 @@ include_once('includes/script.php');
   .done(function( msg ) {
   	$('#append').empty();
   	msg=jQuery.parseJSON(msg);
-  	var machine=msg.machine_name;
-   $('#append').append('<div class="form-group"><label>Machine:</label>  '+machine+'</div>');
+   $('#append').append('<div class="form-group"><select class="form-control" name="machine" id="machine" onchange="check()"><option value="" disabled selected>Machine</option></select><div>');
+   $.each(msg.machine, function(i, machine){
+   	$('#machine').append('<option value="'+machine.machine_id+'">'+machine.machine_name+'</option>');
+   });
    $('#append').append('<div class="form-group"><select class="form-control" name="special" id="special" onchange="check()"><option value="" disabled selected>Special Options</option></select><div>');
    $.each(msg.special, function(i, special){
    	$('#special').append('<option value="'+special.so_id+'">'+special.so_name+'</option>');
