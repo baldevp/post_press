@@ -5,7 +5,7 @@ include_once('includes/power.php');
 power($db);
 include_once('includes/nav.php');
 ?>
-<h1>Edit User</h1>
+<h1>Edit Book</h1>
 <hr>
 <?php
 if(isset($_POST['submit2'])){

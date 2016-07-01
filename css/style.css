@@ -52,3 +52,38 @@
 	form{
 		margin-bottom:10px;
 	}
+	.book_name{
+		font-weight: 900;
+		font-size: 28px;
+	}
+	.table1{
+		margin-bottom: 0px !important;
+	}
+	.hr{
+		margin-top: 0px !important;
+		margin-bottom: 5px !important;
+	}
+@media print{
+                        table { page-break-after:auto;}
+                        tr    { page-break-inside:avoid;}
+                        td    { page-break-inside:auto;}
+                        thead { display:table-header-group }
+
+                        .row-fluid [class*="span"] {
+                          min-height: 20px;
+                        }
+                    }
+
+                    @page { 
+                        margin-top: 1cm;
+                        margin-right: 1cm;
+                        margin-bottom:2cm;
+                        margin-left: 2cm;';
+                        size:portrait;
+                        /*
+                        size:landscape;
+                        -webkit-transform: rotate(-90deg); -moz-transform:rotate(-90deg);
+                        filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+                        */
+
+                    };

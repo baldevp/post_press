@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<!--<style type="text/css" media="print" href="css/style1.css">-->
 </head>
 <body>
 <?php

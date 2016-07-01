@@ -2,8 +2,8 @@
 $title="Add Voucher";
 include_once('includes/head.php');
 include_once('includes/power.php');
-include_once('includes/nav.php');
 power($db);
+include_once('includes/nav.php');
 if(isset($_POST['submit'])){
     $vdate=date('Y-m-d', strtotime($_POST['vdate']));
     $final=$_POST['final_count'];
@@ -32,6 +32,14 @@ if(isset($_POST['submit'])){
             $query="update production_steps set step_final=1 where ps_id=$ps_id";
             mysqli_query($db,$query);
         }
+    }
+    $query="select * from production_steps where step_final=0 and bproduction_id=$x";
+    $result=mysqli_query($db,$query);
+    $query="select * from production_steps where bproduction_id=$x";
+    $result1=mysqli_query($db,$query);
+    if((mysqli_num_rows($result)==0)&&(mysqli_num_rows($result1)>0)){
+        $query="update book_production set production_status=1 where bp_id=$x";
+        mysqli_query($db,$query);
     }
     if(isset($_POST['ps_id1'])){
     $query="select max_books,unprocessed_books from production_steps where ps_id=".$_POST['ps_id1']." order by ps_id desc limit 1";
@@ -109,9 +117,8 @@ include_once('includes/script.php');
         if(type==0){
          final=Math.round(copies*0.9);
          remain=copies-final;
-        $("#append3").append('<div class="form-group"><label>No of copies billed:</label>'+final+'</div>');
         }
-        $('#append3').append('<input type="hidden" name="final_count" value="'+final+'"><input type="hidden" name="unreported" value="'+remain+'">');
+        $('#append3').append('<div class="form-group"><label>No of copies billed:</label><input class="form-control" type="number" id="final_count" name="final_count" value="'+final+'"></div><input type="hidden" name="unreported" value="'+remain+'">');
     }
 
     function getbook(){
@@ -229,6 +236,7 @@ include_once('includes/script.php');
 
 	function validate(){
         var reported=$('#reported').val();
+        var final=$('#final_count').val();
         var trader=$('#trader').val();
         var edition=$('#edition').val();
         var bp=$('#bp').val();
@@ -248,6 +256,9 @@ include_once('includes/script.php');
         if(bp==null){
             alert('Binding Process should not be empty');
             return false;
+        }
+        if(count>reported){
+            alert("Final count of books cannot be greater than reported");
         }
 	}
 </script>

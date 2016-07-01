@@ -18,7 +18,8 @@ if(isset($_POST['submit'])){
 		$book_size=$_POST['book_size'];
 		$ptype=$_POST['paper_type'];
 		$machine=$_POST['machine'];
-		$query="insert into rate(binding_process,special_options,book_size,paper_type,rate,machine) values($bindingprocess,$special,$book_size,'$ptype',$rate,$machine)";
+		$bind=$_POST['bind'];
+		$query="insert into rate(binding_process,special_options,book_size,paper_type,rate,machine,bind) values($bindingprocess,$special,$book_size,'$ptype',$rate,$machine,'$bind')";
 		mysqli_query($db,$query) or die($query);
 		$success="Rate added";
 	}
@@ -63,6 +64,13 @@ if(isset($_POST['submit'])){
 			<option value="standard">Standard Paper</option>
 			<option value="deluxe">Deluxe Paper</option>
 			<option value="art">Art Paper</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<select class="form-control" name="bind" id="bind" onchange="check()">
+			<option value="" disabled selected>Bind</option>
+			<option value="hard">Hard Bound</option>
+			<option value="soft">Soft Bound</option>
 		</select>
 	</div>
 	<div class="form-group">
@@ -123,6 +131,7 @@ include_once('includes/script.php');
 		var rate=$('#rate').val();
 		var special=$('#special').val();
 		var machine=$('#machine').val();
+		var bind=$('#bind').val();
 		if(b_process!=null&&b_size!=null&&p_type!=null&&special!=null&&machine!=null){
 		$.ajax({
  		 method: "POST",
@@ -132,7 +141,8 @@ include_once('includes/script.php');
   			bs_id: b_size,
   			ptype: p_type,
   			machine: machine,
-  			so_id: special }
+  			so_id: special,
+  			bind:bind }
 		})
   		.done(function( msg ) {
   			if(msg!="null"){

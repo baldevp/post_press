@@ -6,7 +6,7 @@ function power($db){
 	$link=trim($link);
 	$query="select * from user_power inner join functions on user_power.function_id=functions.function_id where function_link='$link' and user_id=".$_COOKIE['user_id'];
 	$result=mysqli_query($db,$query)or die('Error querying db');
-	if(mysqli_num_rows($result)==0)
+	if(mysqli_num_rows($result)==0&&($link!='changepass.php'))
 	header('Location: .');
 }
 
